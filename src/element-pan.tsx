@@ -22,7 +22,7 @@ export class ElementPan extends React.Component<{
     startY?: number;
     width?: number;
     height?: number;
-    ref?: (el: HTMLDivElement) => void;
+    refElem?: (el: HTMLDivElement) => void;
     style?: {
         [key: string]: any
     }
@@ -170,7 +170,7 @@ export class ElementPan extends React.Component<{
 
     public ref(el: HTMLDivElement) {
         if (el) {
-            if (this.props.ref) this.props.ref(el);
+            if (this.props.refElem) this.props.refElem(el);
             this.el = el;
         };
     }
