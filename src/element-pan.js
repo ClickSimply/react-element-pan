@@ -117,12 +117,14 @@ var ElementPan = (function (_super) {
     };
     ElementPan.prototype.ref = function (el) {
         if (el) {
+            if (this.props.ref)
+                this.props.ref(el);
             this.el = el;
         }
         ;
     };
     ElementPan.prototype.render = function () {
-        return (React.createElement("div", { ref: this.ref, className: this.props.className, style: this.getContainerStyles(), onTouchStart: this.onDragStart, onMouseDown: this.onDragStart }, this.props.children));
+        return (React.createElement("div", { ref: this.ref, className: this.props.className || "element-pan", style: this.getContainerStyles(), onTouchStart: this.onDragStart, onMouseDown: this.onDragStart }, this.props.children));
     };
     return ElementPan;
 }(React.Component));

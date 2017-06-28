@@ -14,14 +14,15 @@ export interface ElementPanState {
 }
 
 export class ElementPan extends React.Component<{
-    className?: string,
-    onPanStart?: (e: ElementPanState) => void,
-    onPan?: (coords:{x: number, y: number}) => void,
-    onPanStop?: (coords:{x: number, y: number}) => void,
-    startX?: number,
-    startY?: number,
-    width?: number,
-    height?: number,
+    className?: string;
+    onPanStart?: (e?: ElementPanState) => void;
+    onPan?: (coords?:{x: number, y: number}) => void;
+    onPanStop?: (coords?:{x: number, y: number}) => void;
+    startX?: number;
+    startY?: number;
+    width?: number;
+    height?: number;
+    ref?: (el: HTMLDivElement) => void;
     style?: {
         [key: string]: any
     }
@@ -169,13 +170,14 @@ export class ElementPan extends React.Component<{
 
     public ref(el: HTMLDivElement) {
         if (el) {
+            if (this.props.ref) this.props.ref(el);
             this.el = el;
         };
     }
 
     public render() {
         return (
-            <div ref={this.ref} className={this.props.className} style={this.getContainerStyles()} onTouchStart={this.onDragStart} onMouseDown={this.onDragStart}>
+            <div ref={this.ref} className={this.props.className || "element-pan"} style={this.getContainerStyles()} onTouchStart={this.onDragStart} onMouseDown={this.onDragStart}>
                 {this.props.children}
             </div>
         );

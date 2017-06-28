@@ -13,12 +13,12 @@ export interface ElementPanState {
 }
 export declare class ElementPan extends React.Component<{
     className?: string;
-    onPanStart?: (e: ElementPanState) => void;
-    onPan?: (coords: {
+    onPanStart?: (e?: ElementPanState) => void;
+    onPan?: (coords?: {
         x: number;
         y: number;
     }) => void;
-    onPanStop?: (coords: {
+    onPanStop?: (coords?: {
         x: number;
         y: number;
     }) => void;
@@ -26,6 +26,7 @@ export declare class ElementPan extends React.Component<{
     startY?: number;
     width?: number;
     height?: number;
+    ref?: (el: HTMLDivElement) => void;
     style?: {
         [key: string]: any;
     };
