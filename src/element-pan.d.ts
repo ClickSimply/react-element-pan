@@ -37,5 +37,6 @@ export declare class ElementPan extends React.Component<{
     onDragStop(): void;
     componentDidMount(): void;
     getContainerStyles(): any;
+    ref(el: HTMLDivElement): void;
     render(): JSX.Element;
 }

@@ -34,6 +34,10 @@ var ElementPan = (function (_super) {
             maxX: 0,
             maxY: 0
         };
+        _this.onDragMove = _this.onDragMove.bind(_this);
+        _this.onDragStart = _this.onDragStart.bind(_this);
+        _this.onDragStop = _this.onDragStop.bind(_this);
+        _this.ref = _this.ref.bind(_this);
         return _this;
     }
     ElementPan.prototype.onDragStart = function (e) {
@@ -111,10 +115,14 @@ var ElementPan = (function (_super) {
         }
         return style;
     };
+    ElementPan.prototype.ref = function (el) {
+        if (el) {
+            this.el = el;
+        }
+        ;
+    };
     ElementPan.prototype.render = function () {
-        var _this = this;
-        return (React.createElement("div", { ref: function (el) { if (el)
-                _this.el = el; }, className: this.props.className, style: this.getContainerStyles(), onTouchStart: this.onDragStart, onMouseDown: this.onDragStart }, this.props.children));
+        return (React.createElement("div", { ref: this.ref, className: this.props.className, style: this.getContainerStyles(), onTouchStart: this.onDragStart, onMouseDown: this.onDragStart }, this.props.children));
     };
     return ElementPan;
 }(React.Component));

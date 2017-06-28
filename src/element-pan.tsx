@@ -42,6 +42,10 @@ export class ElementPan extends React.Component<{
             maxX: 0,
             maxY: 0
         };
+        this.onDragMove = this.onDragMove.bind(this);
+        this.onDragStart = this.onDragStart.bind(this);
+        this.onDragStop = this.onDragStop.bind(this);
+        this.ref = this.ref.bind(this);
     }
 
     public onDragStart(e) {
@@ -163,9 +167,15 @@ export class ElementPan extends React.Component<{
         return style;
     }
 
+    public ref(el: HTMLDivElement) {
+        if (el) {
+            this.el = el;
+        };
+    }
+
     public render() {
         return (
-            <div ref={el => {if (el) this.el = el}} className={this.props.className} style={this.getContainerStyles()} onTouchStart={this.onDragStart} onMouseDown={this.onDragStart}>
+            <div ref={this.ref} className={this.props.className} style={this.getContainerStyles()} onTouchStart={this.onDragStart} onMouseDown={this.onDragStart}>
                 {this.props.children}
             </div>
         );
