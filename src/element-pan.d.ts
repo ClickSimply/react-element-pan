@@ -26,7 +26,7 @@ export declare class ElementPan extends React.Component<{
     startY?: number;
     width?: number;
     height?: number;
-    ref?: (el: HTMLDivElement) => void;
+    refElem?: (el: HTMLDivElement) => void;
     style?: {
         [key: string]: any;
     };

@@ -117,8 +117,8 @@ var ElementPan = (function (_super) {
     };
     ElementPan.prototype.ref = function (el) {
         if (el) {
-            if (this.props.ref)
-                this.props.ref(el);
+            if (this.props.refElem)
+                this.props.refElem(el);
             this.el = el;
         }
         ;
