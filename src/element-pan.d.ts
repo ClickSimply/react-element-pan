@@ -12,21 +12,21 @@ export interface ElementPanState {
     maxY: number;
 }
 export declare class ElementPan extends React.Component<{
-    className: string;
-    onPanStart: (e: ElementPanState) => void;
-    onPan: (coords: {
+    className?: string;
+    onPanStart?: (e: ElementPanState) => void;
+    onPan?: (coords: {
         x: number;
         y: number;
     }) => void;
-    onPanStop: (coords: {
+    onPanStop?: (coords: {
         x: number;
         y: number;
     }) => void;
-    startX: number;
-    startY: number;
-    width: number;
-    height: number;
-    style: {
+    startX?: number;
+    startY?: number;
+    width?: number;
+    height?: number;
+    style?: {
         [key: string]: any;
     };
 }, ElementPanState> {

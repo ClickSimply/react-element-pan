@@ -14,15 +14,15 @@ export interface ElementPanState {
 }
 
 export class ElementPan extends React.Component<{
-    className: string,
-    onPanStart: (e: ElementPanState) => void,
-    onPan: (coords:{x: number, y: number}) => void,
-    onPanStop: (coords:{x: number, y: number}) => void,
-    startX: number,
-    startY: number,
-    width: number,
-    height: number,
-    style: {
+    className?: string,
+    onPanStart?: (e: ElementPanState) => void,
+    onPan?: (coords:{x: number, y: number}) => void,
+    onPanStop?: (coords:{x: number, y: number}) => void,
+    startX?: number,
+    startY?: number,
+    width?: number,
+    height?: number,
+    style?: {
         [key: string]: any
     }
 }, ElementPanState> {
