@@ -31,12 +31,7 @@ export declare class ElementPan extends React.Component<{
     };
 }, ElementPanState> {
     el: HTMLDivElement;
-    getDefaultProps(): {
-        className: string;
-    };
-    getInitialState(): {
-        dragging: boolean;
-    };
+    constructor();
     onDragStart(e: any): void;
     onDragMove(e: any): void;
     onDragStop(): void;

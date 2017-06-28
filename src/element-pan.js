@@ -22,18 +22,20 @@ var eventListener = require('eventlistener');
 var ElementPan = (function (_super) {
     __extends(ElementPan, _super);
     function ElementPan() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super.call(this) || this;
+        _this.state = {
+            dragging: false,
+            elHeight: 0,
+            elWidth: 0,
+            startX: 0,
+            startY: 0,
+            scrollX: 0,
+            scrollY: 0,
+            maxX: 0,
+            maxY: 0
+        };
+        return _this;
     }
-    ElementPan.prototype.getDefaultProps = function () {
-        return {
-            className: 'element-pan'
-        };
-    };
-    ElementPan.prototype.getInitialState = function () {
-        return {
-            dragging: false
-        };
-    };
     ElementPan.prototype.onDragStart = function (e) {
         eventListener.add(window, 'mousemove', this.onDragMove);
         eventListener.add(window, 'touchmove', this.onDragMove);
@@ -86,7 +88,6 @@ var ElementPan = (function (_super) {
         }
     };
     ElementPan.prototype.componentDidMount = function () {
-        this.el = this.refs.container;
         if (this.props.startX) {
             this.el.scrollLeft = this.props.startX;
         }
@@ -111,7 +112,9 @@ var ElementPan = (function (_super) {
         return style;
     };
     ElementPan.prototype.render = function () {
-        return (React.createElement("div", { ref: "container", className: this.props.className, style: this.getContainerStyles(), onTouchStart: this.onDragStart, onMouseDown: this.onDragStart }, this.props.children));
+        var _this = this;
+        return (React.createElement("div", { ref: function (el) { if (el)
+                _this.el = el; }, className: this.props.className, style: this.getContainerStyles(), onTouchStart: this.onDragStart, onMouseDown: this.onDragStart }, this.props.children));
     };
     return ElementPan;
 }(React.Component));

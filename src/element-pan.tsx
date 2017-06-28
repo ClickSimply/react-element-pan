@@ -29,16 +29,19 @@ export class ElementPan extends React.Component<{
 
     public el: HTMLDivElement;
 
-    public getDefaultProps() {
-        return {
-            className: 'element-pan'
-        };  
-    }
-
-    public getInitialState() {
-        return {
-            dragging: false
-        };   
+    constructor() {
+        super();
+        this.state = {
+            dragging: false,
+            elHeight: 0,
+            elWidth: 0,
+            startX: 0,
+            startY: 0,
+            scrollX: 0,
+            scrollY: 0,
+            maxX: 0,
+            maxY: 0
+        };
     }
 
     public onDragStart(e) {
@@ -129,8 +132,6 @@ export class ElementPan extends React.Component<{
     }
 
     public componentDidMount() {
-        // Cached for faster lookup
-        this.el = this.refs.container as HTMLDivElement;
 
         if (this.props.startX) {
             this.el.scrollLeft = this.props.startX;
@@ -164,7 +165,7 @@ export class ElementPan extends React.Component<{
 
     public render() {
         return (
-            <div ref={"container"} className={this.props.className} style={this.getContainerStyles()} onTouchStart={this.onDragStart} onMouseDown={this.onDragStart}>
+            <div ref={el => {if (el) this.el = el}} className={this.props.className} style={this.getContainerStyles()} onTouchStart={this.onDragStart} onMouseDown={this.onDragStart}>
                 {this.props.children}
             </div>
         );
