@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "stripInternal": true,
+        "removeComments": true,
+        "strictNullChecks": true,
+        "noImplicitAny": false,
+        "noImplicitReturns": true,
+        "jsx":"react",
+        "noImplicitThis": true,
+        "noImplicitUseStrict": true,
+        "declaration": true
+    },
+    "include": [
+        "src/**/*"
+    ]
+}

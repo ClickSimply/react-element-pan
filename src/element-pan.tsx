@@ -1,0 +1,172 @@
+import * as React from "react";
+const eventListener = require('eventlistener');
+
+export interface ElementPanState {
+    dragging: boolean;
+    elHeight: number;
+    elWidth: number;
+    startX: number;
+    startY: number;
+    scrollX: number;
+    scrollY: number;
+    maxX: number;
+    maxY: number;
+}
+
+export class ElementPan extends React.Component<{
+    className: string,
+    onPanStart: (e: ElementPanState) => void,
+    onPan: (coords:{x: number, y: number}) => void,
+    onPanStop: (coords:{x: number, y: number}) => void,
+    startX: number,
+    startY: number,
+    width: number,
+    height: number,
+    style: {
+        [key: string]: any
+    }
+}, ElementPanState> {
+
+    public el: HTMLDivElement;
+
+    public getDefaultProps() {
+        return {
+            className: 'element-pan'
+        };  
+    }
+
+    public getInitialState() {
+        return {
+            dragging: false
+        };   
+    }
+
+    public onDragStart(e) {
+        // We want to be able to pan around inside the container even when the
+        // mouse is on the outside of the element (as long as the mouse button
+        // is still being pressed) - this is why we're attaching to the window
+        eventListener.add(window, 'mousemove', this.onDragMove);
+        eventListener.add(window, 'touchmove', this.onDragMove);
+        eventListener.add(window, 'mouseup', this.onDragStop);
+        eventListener.add(window, 'touchend', this.onDragStop);
+
+        // If we have multiple child nodes, use the scroll[Height/Width]
+        // If we have no child-nodes, use bounds to find size of inner content
+        var bounds, target = e.currentTarget || e.target;
+        if (target.childNodes.length > 1) {
+            bounds = { width: target.scrollWidth, height: target.scrollHeight };
+        } else {
+            bounds = e.target.getBoundingClientRect();
+        }
+
+        // Find start position of drag based on touch/mouse coordinates
+        var startX = typeof e.clientX === 'undefined' ? e.changedTouches[0].clientX : e.clientX,
+            startY = typeof e.clientY === 'undefined' ? e.changedTouches[0].clientY : e.clientY;
+
+        var state = {
+            dragging: true,
+
+            elHeight: this.el.clientHeight,
+            elWidth: this.el.clientWidth,
+
+            startX: startX,
+            startY: startY,
+
+            scrollX: this.el.scrollLeft,
+            scrollY: this.el.scrollTop,
+
+            maxX: bounds.width,
+            maxY: bounds.height
+        };
+
+        this.setState(state);
+
+        if (this.props.onPanStart) {
+            this.props.onPanStart(state);
+        }
+    }
+
+    public onDragMove(e) {
+        e.preventDefault();
+
+        if (!this.state.dragging) {
+            return;
+        }
+
+        var x = typeof e.clientX === 'undefined' ? e.changedTouches[0].clientX : e.clientX,
+            y = typeof e.clientY === 'undefined' ? e.changedTouches[0].clientY : e.clientY;
+
+        // Letting the browser automatically stop on scrollHeight
+        // gives weird bugs where some extra pixels are showing.
+        // Substracting the height/width of the container from the
+        // inner content seems to do the trick.
+        this.el.scrollLeft = Math.min(
+            this.state.maxX - this.state.elWidth,
+            this.state.scrollX - (x - this.state.startX)
+        );
+
+        this.el.scrollTop = Math.min(
+            this.state.maxY - this.state.elHeight,
+            this.state.scrollY - (y - this.state.startY)
+        );
+
+        if (this.props.onPan) {
+            this.props.onPan({ x: this.el.scrollLeft, y: this.el.scrollTop });
+        }
+    }
+
+    public onDragStop() {
+        this.setState({ dragging: false });
+
+        eventListener.remove(window, 'mousemove', this.onDragMove);
+        eventListener.remove(window, 'touchmove', this.onDragMove);
+        eventListener.remove(window, 'mouseup', this.onDragStop);
+        eventListener.remove(window, 'touchend', this.onDragStop);
+
+        if (this.props.onPanStop) {
+            this.props.onPanStop({ x: this.el.scrollLeft, y: this.el.scrollTop });
+        }
+    }
+
+    public componentDidMount() {
+        // Cached for faster lookup
+        this.el = this.refs.container as HTMLDivElement;
+
+        if (this.props.startX) {
+            this.el.scrollLeft = this.props.startX;
+        }
+
+        if (this.props.startY) {
+            this.el.scrollTop = this.props.startY;
+        }
+    }
+
+    public getContainerStyles(): any {
+        let style: any = {
+            overflow: 'hidden',
+            cursor: 'move'
+        };
+
+        if (this.props.width) {
+            style.width = this.props.width;
+        }
+
+        if (this.props.height) {
+            style.height = this.props.height;
+        }
+
+        if (this.props.style) {
+            style = {...style, ...this.props.style};
+        }
+
+        return style;
+    }
+
+    public render() {
+        return (
+            <div ref={"container"} className={this.props.className} style={this.getContainerStyles()} onTouchStart={this.onDragStart} onMouseDown={this.onDragStart}>
+                {this.props.children}
+            </div>
+        );
+    }
+}

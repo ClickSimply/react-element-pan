@@ -1,19 +1,15 @@
 {
-  "name": "react-element-pan",
-  "version": "1.0.9",
+  "name": "react-element-pan-ts",
+  "version": "1.1.0",
   "description": "React component for allowing panning of DOM-elements too large for their container, in a Google Maps-like way.",
   "main": "src/element-pan.js",
-  "browser": "umd/element-pan.js",
+  "typings": "src/element-pan.d.ts",
   "scripts": {
-    "test": "eslint .",
-    "build": "npm run build:umd && npm run build:prod",
-    "build:umd": "webpack src/element-pan.js umd/element-pan.js",
-    "build:prod": "NODE_ENV=production webpack -p src/element-pan.js umd/element-pan.min.js",
-    "prepublish": "npm run build && npm run test"
+    "build": "webpack -p"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:rexxars/react-element-pan.git"
+    "url": "https://github.com/ClickSimply/react-element-pan.git"
   },
   "keywords": [
     "react",
@@ -24,21 +20,21 @@
     "view",
     "overflow"
   ],
-  "author": "Espen Hovlandsdal <espen@hovlandsdal.com>",
+  "author": "Espen Hovlandsdal <espen@hovlandsdal.com>, Scott Lott <Scott@ClickSimply.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rexxars/react-element-pan/issues"
+    "url": "https://github.com/ClickSimply/react-element-pan/issues"
   },
-  "homepage": "https://github.com/rexxars/react-element-pan",
+  "homepage": "https://github.com/ClickSimply/react-element-pan",
   "devDependencies": {
-    "eslint": "^3.15.0",
-    "eslint-config-vaffel": "^5.0.0",
-    "webpack": "^1.12.6"
+    "@types/node": "^8.0.4",
+    "@types/react": "^15.0.33",
+    "@types/react-dom": "^15.5.1"
   },
   "dependencies": {
-    "eventlistener": "0.0.1"
-  },
-  "peerDependencies": {
-    "react": ">= 0.11.0"
+    "eventlistener": "0.0.1",
+    "react": "^16.0.0-alpha.13",
+    "react-dom": "^16.0.0-alpha.13",
+    "typescript": "^2.4.1"
   }
 }

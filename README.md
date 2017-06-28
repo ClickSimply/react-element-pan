@@ -1,6 +1,8 @@
 # react-element-pan
 React component for allowing panning of DOM-elements too large for their container, in a Google Maps-like way. Supports touch devices and should work on IE8+.
 
+This version has been converted to Typescript and it's compatible with React 16.
+
 ## Demos
 See [the demos page](http://rexxars.github.io/react-element-pan/) for some demos.
 
@@ -8,7 +10,7 @@ See [the demos page](http://rexxars.github.io/react-element-pan/) for some demos
 `react-element-pan` can be installed using [npm](https://npmjs.org/):
 
 ```
-npm install react-element-pan
+npm install react-element-pan-ts
 ```
 
 ## Basic usage
