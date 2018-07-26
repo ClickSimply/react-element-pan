@@ -1,3 +1,8 @@
+# UPDATE
+The original project has added all the benefits provided by this fork, including typescript typings and React 16 updates.
+
+Please use the [original react-element-pan](https://npmjs.com/package/react-element-pan) as it's being actively maintained.
+
 # react-element-pan
 React component for allowing panning of DOM-elements too large for their container, in a Google Maps-like way. Supports touch devices and should work on IE8+.
 
